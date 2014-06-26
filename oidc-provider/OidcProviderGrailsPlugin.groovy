@@ -63,6 +63,7 @@ Brief summary/description of the plugin.
             }
         }
 
+        // TODO: make spring security filter works!
 /*
         def filters = xml.filter
         def lastFilter = filters[filters.size() - 1]
@@ -90,6 +91,9 @@ Brief summary/description of the plugin.
     }
 
     def doWithSpring = {
+        // borrowed codes from http://grails.org/plugin/springmvc
+        // TODO: check if these blocks are necessary?
+
         def config = application.config.oidc
 
         mvcLocaleChangeInterceptor(LocaleChangeInterceptor)
