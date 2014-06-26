@@ -101,6 +101,9 @@ environments {
 
 // log4j configuration
 log4j = {
+    root {
+        info()
+    }
     // Example of changing the log pattern for the default console appender:
     //
     //appenders {
@@ -115,9 +118,12 @@ log4j = {
            'org.codehaus.groovy.grails.commons',            // core / classloading
            'org.codehaus.groovy.grails.plugins',            // plugins
            'org.codehaus.groovy.grails.orm.hibernate',      // hibernate integration
-           'org.springframework',
+ //          'org.springframework',
            'org.hibernate',
            'net.sf.ehcache.hibernate'
+
+    debug  'org.springframework'
+
 }
 
 oidc {

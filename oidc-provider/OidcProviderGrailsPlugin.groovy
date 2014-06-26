@@ -1,10 +1,9 @@
 import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping
-import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor
 
 class OidcProviderGrailsPlugin {
     // the plugin version
-    def version = "0.1"
+    def version = "0.1-SNAPSHOT"
     // the version or versions of Grails the plugin is designed for
     def grailsVersion = "2.3 > *"
     // resources that are excluded from plugin packaging
@@ -63,6 +62,31 @@ Brief summary/description of the plugin.
                 'url-pattern'("/*")
             }
         }
+
+/*
+        def filters = xml.filter
+        def lastFilter = filters[filters.size() - 1]
+        lastFilter + {
+            filter {
+                'filter-name'('springSecurityFilterChain')
+                'filter-class'('org.springframework.web.filter.DelegatingFilterProxy')
+                'init-param' {
+                    'param-name'('contextAttribute')
+                    'param-value'('org.springframework.web.servlet.FrameworkServlet.CONTEXT.spring')
+                }
+            }
+        }
+
+        def filterMappings = xml.'filter-mapping'
+        def lastFilterMapping = filterMappings[filterMappings.size()-1]
+        lastFilterMapping + {
+            'filter-mapping' {
+                'filter-name'('springSecurityFilterChain')
+                'url-pattern'("/*")
+            }
+        }
+*/
+
     }
 
     def doWithSpring = {
@@ -75,11 +99,11 @@ Brief summary/description of the plugin.
             handlerInterceptors << ref(interceptor)
         }
 
-        mvcHandlerMapping(BeanNameUrlHandlerMapping) {
-            detectHandlersInAncestorContexts = true
-            order = 1
-            interceptors = handlerInterceptors
-        }
+//        mvcHandlerMapping(BeanNameUrlHandlerMapping) {
+//            detectHandlersInAncestorContexts = true
+//            order = 1
+//            interceptors = handlerInterceptors
+//        }
 
 //        mvcViewResolver(UrlBasedViewResolver) {
 //            viewClass = GrailsSpringMvcView
@@ -88,16 +112,16 @@ Brief summary/description of the plugin.
 //            suffix = '.jsp'
 //        }
 
-        handlerExceptionResolver(SimpleMappingExceptionResolver) {
-            order = 1
-            defaultErrorView = config.defaultErrorView ?: 'error' // default to WEB-INF/error.jsp
-            if (config.exceptionMappings) {
-                exceptionMappings = new Properties()
-                config.exceptionMappings.each { key, value ->
-                    exceptionMappings.setProperty key, value
-                }
-            }
-        }
+//        handlerExceptionResolver(SimpleMappingExceptionResolver) {
+//            order = 1
+//            defaultErrorView = config.defaultErrorView ?: 'error' // default to WEB-INF/error.jsp
+//            if (config.exceptionMappings) {
+//                exceptionMappings = new Properties()
+//                config.exceptionMappings.each { key, value ->
+//                    exceptionMappings.setProperty key, value
+//                }
+//            }
+//        }
 
 //        def componentPackages = config.componentPackages
 //        if (componentPackages instanceof Collection) {

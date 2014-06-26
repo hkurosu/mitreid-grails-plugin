@@ -82,6 +82,10 @@ grails.project.dependency.resolution = {
         //compile ":coffee-asset-pipeline:1.5.0"
         //compile ":handlebars-asset-pipeline:1.3.0.1"
 
-        compile ":oidc-provider:0.1"
+        compile (":oidc-provider:0.1-SNAPSHOT") {
+            changing = true
+        }
     }
 }
+
+// grails.plugin.location.'oidc-provider' = '../oidc-provider'
