@@ -63,8 +63,6 @@ Brief summary/description of the plugin.
             }
         }
 
-        // TODO: make spring security filter works!
-/*
         def filters = xml.filter
         def lastFilter = filters[filters.size() - 1]
         lastFilter + {
@@ -73,7 +71,7 @@ Brief summary/description of the plugin.
                 'filter-class'('org.springframework.web.filter.DelegatingFilterProxy')
                 'init-param' {
                     'param-name'('contextAttribute')
-                    'param-value'('org.springframework.web.servlet.FrameworkServlet.CONTEXT.spring')
+                    'param-value'('org.springframework.web.servlet.FrameworkServlet.CONTEXT.oidc')
                 }
             }
         }
@@ -86,7 +84,6 @@ Brief summary/description of the plugin.
                 'url-pattern'("/*")
             }
         }
-*/
 
     }
 
