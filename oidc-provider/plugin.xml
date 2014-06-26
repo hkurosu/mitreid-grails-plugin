@@ -1,0 +1,9 @@
+<plugin name='oidc-provider' version='0.1' grailsVersion='2.3 &gt; *'>
+  <author>Your name</author>
+  <title>Oidc Provider Plugin</title>
+  <description>Brief summary/description of the plugin.
+</description>
+  <documentation>http://grails.org/plugin/oidc-provider</documentation>
+  <type>OidcProviderGrailsPlugin</type>
+  <resources />
+</plugin>
