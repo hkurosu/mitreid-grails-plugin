@@ -40,8 +40,6 @@ grails.project.dependency.resolution = {
 
         // adding WAR dependencies
         runtime 'org.springframework:spring-orm:3.2.3.RELEASE'
-        runtime 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.1'
-
     }
 
     plugins {

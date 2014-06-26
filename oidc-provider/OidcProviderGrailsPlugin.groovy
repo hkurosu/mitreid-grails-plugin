@@ -1,3 +1,7 @@
+import org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping
+import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor
+
 class OidcProviderGrailsPlugin {
     // the plugin version
     def version = "0.1"

@@ -47,14 +47,15 @@ grails.project.dependency.resolution = {
     }
 
     dependencies {
-        // specify dependencies here under either 'build', 'compile', 'runtime', 'test' or 'provided' scopes e.g.
-        // runtime 'mysql:mysql-connector-java:5.1.27'
-        // runtime 'org.postgresql:postgresql:9.3-1100-jdbc41'
+        // TODO: eliminate HSQL & ECLIPSELINK dependencies
+        // JPA + dataSource from MITREid
+        runtime 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.1'
+        runtime 'org.hsqldb:hsqldb:2.2.9'
+        runtime 'commons-dbcp:commons-dbcp:1.4'
+
     }
 
     plugins {
-        compile ":oidc-provider:0.1"
-
         // plugins for the build system only
         build ":tomcat:7.0.52.1"
 
@@ -80,5 +81,7 @@ grails.project.dependency.resolution = {
         //compile ":less-asset-pipeline:1.5.3"
         //compile ":coffee-asset-pipeline:1.5.0"
         //compile ":handlebars-asset-pipeline:1.3.0.1"
+
+        compile ":oidc-provider:0.1"
     }
 }
