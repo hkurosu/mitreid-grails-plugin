@@ -91,14 +91,14 @@ Brief summary/description of the plugin.
         // borrowed codes from http://grails.org/plugin/springmvc
         // TODO: check if these blocks are necessary?
 
-        def config = application.config.oidc
-
-        mvcLocaleChangeInterceptor(LocaleChangeInterceptor)
-
-        def handlerInterceptors = [ref('mvcLocaleChangeInterceptor')]
-        config.interceptors.each { interceptor ->
-            handlerInterceptors << ref(interceptor)
-        }
+//        def config = application.config.oidc
+//
+//        mvcLocaleChangeInterceptor(LocaleChangeInterceptor)
+//
+//        def handlerInterceptors = [ref('mvcLocaleChangeInterceptor')]
+//        config.interceptors.each { interceptor ->
+//            handlerInterceptors << ref(interceptor)
+//        }
 
 //        mvcHandlerMapping(BeanNameUrlHandlerMapping) {
 //            detectHandlersInAncestorContexts = true
