@@ -88,6 +88,11 @@ Brief summary/description of the plugin.
     }
 
     def doWithSpring = {
+
+        // TODO: try to merge MITREid's configuration, instead of having different servlet
+        // importBeans(...)
+
+
         // borrowed codes from http://grails.org/plugin/springmvc
         // TODO: check if these blocks are necessary?
 

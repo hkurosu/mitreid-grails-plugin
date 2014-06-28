@@ -39,7 +39,7 @@ grails.project.dependency.resolution = {
         compile 'org.mitre:openid-connect-server:1.1.8'
 
         // adding WAR dependencies
-        runtime 'org.springframework:spring-orm:3.2.3.RELEASE'
+        runtime 'org.springframework:spring-orm:3.2.8.RELEASE'
     }
 
     plugins {
