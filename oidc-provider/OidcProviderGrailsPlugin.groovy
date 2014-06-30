@@ -11,6 +11,8 @@ class OidcProviderGrailsPlugin {
         "grails-app/views/error.gsp"
     ]
 
+    def loadAfter = ['views']
+
     // TODO Fill in these fields
     def title = "Oidc Provider Plugin" // Headline display name of the plugin
     def author = "Your name"
@@ -85,12 +87,21 @@ Brief summary/description of the plugin.
             }
         }
 
+        // TODO: needs to check if jsp-config already exists
+//        lastFilterMapping + {
+//            'jsp-config' {
+//                'jsp-group-property' {
+//                    'url-pattern'("*.jsp")
+//                    'trim-directive-whitespaces'('true')
+//                }
+//            }
+//        }
     }
 
     def doWithSpring = {
 
         // TODO: try to merge MITREid's configuration, instead of having different servlet
-        // importBeans(...)
+        // importBeans('classpath:application-context.xml')
 
 
         // borrowed codes from http://grails.org/plugin/springmvc

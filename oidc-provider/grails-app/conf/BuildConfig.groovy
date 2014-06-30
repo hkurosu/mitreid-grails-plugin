@@ -38,6 +38,13 @@ grails.project.dependency.resolution = {
         //TODO: Can we do 'org.mitre:openid-connect-server-webapp:1.1.8@war' ?
         compile 'org.mitre:openid-connect-server:1.1.8'
 
+        // TODO: eliminate HSQL & ECLIPSELINK dependencies
+        // JPA + dataSource from MITREid
+        runtime 'org.eclipse.persistence:org.eclipse.persistence.jpa:2.5.1'
+        runtime 'org.hsqldb:hsqldb:2.2.9'
+        runtime 'commons-dbcp:commons-dbcp:1.4'
+
+        runtime 'org.springframework:spring-webmvc:3.2.8.RELEASE'
         // adding WAR dependencies
         runtime 'org.springframework:spring-orm:3.2.8.RELEASE'
     }
