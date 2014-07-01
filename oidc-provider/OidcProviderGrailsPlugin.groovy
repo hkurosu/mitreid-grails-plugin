@@ -14,7 +14,7 @@ class OidcProviderGrailsPlugin {
     def loadAfter = ['views']
 
     // TODO Fill in these fields
-    def title = "Oidc Provider Plugin" // Headline display name of the plugin
+    def title = "OIDC Provider Plugin" // Headline display name of the plugin
     def author = "Your name"
     def authorEmail = ""
     def description = '''\
@@ -42,6 +42,7 @@ Brief summary/description of the plugin.
 //    def scm = [ url: "http://svn.codehaus.org/grails-plugins/" ]
 
     def doWithWebDescriptor = { xml ->
+
         def servlets = xml.servlet
         def lastServlet = servlets[servlets.size() - 1]
         lastServlet + {
@@ -64,6 +65,13 @@ Brief summary/description of the plugin.
                 'url-pattern'("/*")
             }
         }
+//                'url-pattern'("/.well-known/openid-configuration")
+//                'url-pattern'("/api/clients")
+//                'url-pattern'("/home")
+//                'url-pattern'("/authorize")
+//                'url-pattern'("/token")
+//                'url-pattern'("/resources/*")
+
 
         def filters = xml.filter
         def lastFilter = filters[filters.size() - 1]
@@ -96,12 +104,27 @@ Brief summary/description of the plugin.
 //                }
 //            }
 //        }
+/***
+        def servletMapping = xml.'servlet-mapping'.find {
+            it.'servlet-name'.text() == "grails"
+        }
+        def urlPatterns = servletMapping.'url-pattern'
+        def lastUrlPattern = urlPatterns[urlPatterns.size() - 1]
+        lastUrlPattern + {
+            'url-pattern'("/.well-known/openid-configuration")
+            'url-pattern'("/api/clients")
+            'url-pattern'("/about")
+            'url-pattern'("/home")
+            'url-pattern'("/authorize")
+            'url-pattern'("/token")
+        }
+***/
     }
 
     def doWithSpring = {
 
         // TODO: try to merge MITREid's configuration, instead of having different servlet
-        // importBeans('classpath:application-context.xml')
+        // importBeans('classpath:/spring/application-context.xml')
 
 
         // borrowed codes from http://grails.org/plugin/springmvc
