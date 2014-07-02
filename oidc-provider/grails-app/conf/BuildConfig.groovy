@@ -45,8 +45,13 @@ grails.project.dependency.resolution = {
         runtime 'commons-dbcp:commons-dbcp:1.4'
 
         runtime 'org.springframework:spring-webmvc:3.2.8.RELEASE'
-        // adding WAR dependencies
         runtime 'org.springframework:spring-orm:3.2.8.RELEASE'
+        // for JSP templates
+        runtime ('org.springframework.security:spring-security-taglibs:3.1.4.RELEASE') {
+            excludes group: 'org.springframework'
+        }
+        runtime 'javax.servlet:jstl:1.2'
+
     }
 
     plugins {
