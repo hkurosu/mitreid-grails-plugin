@@ -41,7 +41,10 @@
 		<bean id="serverConfigInterceptor" class="org.mitre.openid.connect.web.ServerConfigInterceptor" />
 	</mvc:interceptors>
 
+    <!--
+    *** (HK) turn off default servlet handler ***
 	<mvc:default-servlet-handler />
+	-->
 
 	<!-- Bean to hold configuration properties -->
 	<import resource="server-config.xml" />

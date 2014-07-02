@@ -126,5 +126,8 @@ log4j = {
 }
 
 oidc {
-    separateServlet = false
+    debug {
+        separateServlet = true
+        security = true
+    }
 }

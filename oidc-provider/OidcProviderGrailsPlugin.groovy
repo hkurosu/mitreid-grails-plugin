@@ -46,7 +46,7 @@ Brief summary/description of the plugin.
     def doWithWebDescriptor = { xml ->
 
         def config = application.config.oidc
-        if (config.separateServlet) {
+        if (config.debug.separateServlet) {
 
             def servlets = xml.servlet
             def lastServlet = servlets[servlets.size() - 1]
@@ -82,28 +82,30 @@ Brief summary/description of the plugin.
                 }
             }
 
-            //
-            // Spring security filter for MITREid endpoints
-            //
-            def filters = xml.filter
-            def lastFilter = filters[filters.size() - 1]
-            lastFilter + {
-                filter {
-                    'filter-name'('springSecurityFilterChain')
-                    'filter-class'('org.springframework.web.filter.DelegatingFilterProxy')
-                    'init-param' {
-                        'param-name'('contextAttribute')
-                        'param-value'('org.springframework.web.servlet.FrameworkServlet.CONTEXT.oidc')
+            if (config.debug.security) {
+                //
+                // Spring security filter for MITREid endpoints
+                //
+                def filters = xml.filter
+                def lastFilter = filters[filters.size() - 1]
+                lastFilter + {
+                    filter {
+                        'filter-name'('springSecurityFilterChain')
+                        'filter-class'('org.springframework.web.filter.DelegatingFilterProxy')
+                        'init-param' {
+                            'param-name'('contextAttribute')
+                            'param-value'('org.springframework.web.servlet.FrameworkServlet.CONTEXT.oidc')
+                        }
                     }
                 }
-            }
 
-            def filterMappings = xml.'filter-mapping'
-            def lastFilterMapping = filterMappings[filterMappings.size() - 1]
-            lastFilterMapping + {
-                'filter-mapping' {
-                    'filter-name'('springSecurityFilterChain')
-                    'url-pattern'("/*")
+                def filterMappings = xml.'filter-mapping'
+                def lastFilterMapping = filterMappings[filterMappings.size() - 1]
+                lastFilterMapping + {
+                    'filter-mapping' {
+                        'filter-name'('springSecurityFilterChain')
+                        'url-pattern'("/*")
+                    }
                 }
             }
 
@@ -133,45 +135,37 @@ Brief summary/description of the plugin.
                 'url-pattern'("/register/*")
             }
 
-            //
-            // Spring security filter for MITREid endpoints
-            //
-            // FIXME: When turning on the security filter, /about won't work
-            // exception message: No WebApplicationContext found: no ContextLoaderListener registered?
-//            def filters = xml.filter
-//            def lastFilter = filters[filters.size() - 1]
-//            lastFilter + {
-//                filter {
-//                    'filter-name'('springSecurityFilterChain')
-//                    'filter-class'('org.springframework.web.filter.DelegatingFilterProxy')
-//                    'init-param' {
-//                        'param-name'('contextAttribute')
-//                        'param-value'('org.springframework.web.servlet.FrameworkServlet.CONTEXT.spring')
-//                    }
-//                }
-//            }
-//
-//            def filterMappings = xml.'filter-mapping'
-//            def lastFilterMapping = filterMappings[filterMappings.size() - 1]
-//            lastFilterMapping + {
-//                'filter-mapping' {
-//                    'filter-name'('springSecurityFilterChain')
-//                    'url-pattern'("/*")
-//                }
-//            }
+            if (config.debug.security) {
+                //
+                // Spring security filter for MITREid endpoints
+                //
+                // FIXME: When turning on the security filter, /about won't work
+                // exception message: No WebApplicationContext found: no ContextLoaderListener registered?
+                def filters = xml.filter
+                def lastFilter = filters[filters.size() - 1]
+                lastFilter + {
+                    filter {
+                        'filter-name'('springSecurityFilterChain')
+                        'filter-class'('org.springframework.web.filter.DelegatingFilterProxy')
+                    }
+                }
+
+                def filterMappings = xml.'filter-mapping'
+                def lastFilterMapping = filterMappings[filterMappings.size() - 1]
+                lastFilterMapping + {
+                    'filter-mapping' {
+                        'filter-name'('springSecurityFilterChain')
+                        'url-pattern'("/*")
+                    }
+                }
+            }
         }
     }
 
     def doWithSpring = {
 
         def config = application.config.oidc
-        if (config.separateServlet) {
-            jspViewResolver(UrlBasedViewResolver) {
-                viewClass = JstlView
-                order = 1
-                prefix = '/WEB-INF/views/'
-                suffix = '.jsp'
-            }
+        if (config.debug.separateServlet) {
         } else {
             // Needs with (Option 2). Otherwise, comments out
             importBeans('classpath:/spring/application-context.xml')
