@@ -43,6 +43,7 @@ Brief summary/description of the plugin.
 
     def doWithWebDescriptor = { xml ->
 
+        /***
         def servlets = xml.servlet
         def lastServlet = servlets[servlets.size() - 1]
         lastServlet + {
@@ -62,112 +63,105 @@ Brief summary/description of the plugin.
         lastMapping + {
             'servlet-mapping' {
                 'servlet-name'('oidc')
-                'url-pattern'("/*")
-            }
-        }
-//                'url-pattern'("/.well-known/openid-configuration")
-//                'url-pattern'("/api/clients")
-//                'url-pattern'("/home")
-//                'url-pattern'("/authorize")
-//                'url-pattern'("/token")
-//                'url-pattern'("/resources/*")
-
-
-        def filters = xml.filter
-        def lastFilter = filters[filters.size() - 1]
-        lastFilter + {
-            filter {
-                'filter-name'('springSecurityFilterChain')
-                'filter-class'('org.springframework.web.filter.DelegatingFilterProxy')
-                'init-param' {
-                    'param-name'('contextAttribute')
-                    'param-value'('org.springframework.web.servlet.FrameworkServlet.CONTEXT.oidc')
-                }
+                'url-pattern'("/resources/*")
+                'url-pattern'("/.well-known/openid-configuration")
+                'url-pattern'("/home")
+                'url-pattern'("/about")
+                'url-pattern'("/authorize/*")
+                'url-pattern'("/token/*")
+                'url-pattern'("/userinfo/*")
+                'url-pattern'("/jwk/*")
+                'url-pattern'("/introspect/*")
+                'url-pattern'("/revoke/*")
+                'url-pattern'("/oauth/*")
+                'url-pattern'("/register/*")
             }
         }
 
-        def filterMappings = xml.'filter-mapping'
-        def lastFilterMapping = filterMappings[filterMappings.size()-1]
-        lastFilterMapping + {
-            'filter-mapping' {
-                'filter-name'('springSecurityFilterChain')
-                'url-pattern'("/*")
-            }
-        }
 
-        // TODO: needs to check if jsp-config already exists
-//        lastFilterMapping + {
-//            'jsp-config' {
-//                'jsp-group-property' {
-//                    'url-pattern'("*.jsp")
-//                    'trim-directive-whitespaces'('true')
-//                }
-//            }
-//        }
-/***
+         //
+         // Spring security filter for MITREid endpoints
+         //
+         def filters = xml.filter
+         def lastFilter = filters[filters.size() - 1]
+         lastFilter + {
+         filter {
+         'filter-name'('springSecurityFilterChain')
+         'filter-class'('org.springframework.web.filter.DelegatingFilterProxy')
+         'init-param' {
+         'param-name'('contextAttribute')
+         'param-value'('org.springframework.web.servlet.FrameworkServlet.CONTEXT.oidc')
+         }
+         }
+         }
+
+         def filterMappings = xml.'filter-mapping'
+         def lastFilterMapping = filterMappings[filterMappings.size()-1]
+         lastFilterMapping + {
+         'filter-mapping' {
+         'filter-name'('springSecurityFilterChain')
+         'url-pattern'("/*")
+         }
+         }
+        ***/
+
+        //
+        // *** (Option 2) Adding MITREid's endpoints to Grails Servlet
+        //
+        // Adding MITREid's Endpoints url patterns
         def servletMapping = xml.'servlet-mapping'.find {
             it.'servlet-name'.text() == "grails"
         }
         def urlPatterns = servletMapping.'url-pattern'
         def lastUrlPattern = urlPatterns[urlPatterns.size() - 1]
         lastUrlPattern + {
+  //          'url-pattern'("/resources/*")
             'url-pattern'("/.well-known/openid-configuration")
-            'url-pattern'("/api/clients")
-            'url-pattern'("/about")
             'url-pattern'("/home")
-            'url-pattern'("/authorize")
-            'url-pattern'("/token")
+            'url-pattern'("/about")
+            'url-pattern'("/authorize/*")
+            'url-pattern'("/token/*")
+            'url-pattern'("/userinfo/*")
+            'url-pattern'("/jwk/*")
+            'url-pattern'("/introspect/*")
+            'url-pattern'("/revoke/*")
+            'url-pattern'("/oauth/*")
+            'url-pattern'("/register/*")
         }
-***/
+
+        //
+        // Spring security filter for MITREid endpoints
+        //
+        // FIXME: When turning on the security filter, /about won't work
+        // exception message: No WebApplicationContext found: no ContextLoaderListener registered?
+//        def filters = xml.filter
+//        def lastFilter = filters[filters.size() - 1]
+//        lastFilter + {
+//            filter {
+//                'filter-name'('springSecurityFilterChain')
+//                'filter-class'('org.springframework.web.filter.DelegatingFilterProxy')
+//                'init-param' {
+//                    'param-name'('contextAttribute')
+//                    'param-value'('org.springframework.web.servlet.FrameworkServlet.CONTEXT.spring')
+//                }
+//            }
+//        }
+//
+//        def filterMappings = xml.'filter-mapping'
+//        def lastFilterMapping = filterMappings[filterMappings.size()-1]
+//        lastFilterMapping + {
+//            'filter-mapping' {
+//                'filter-name'('springSecurityFilterChain')
+//                'url-pattern'("/*")
+//            }
+//        }
     }
 
     def doWithSpring = {
 
-        // TODO: try to merge MITREid's configuration, instead of having different servlet
-        // importBeans('classpath:/spring/application-context.xml')
+        // Needs with (Option 2). Otherwise, comments out
+        importBeans('classpath:/spring/application-context.xml')
 
-
-        // borrowed codes from http://grails.org/plugin/springmvc
-        // TODO: check if these blocks are necessary?
-
-//        def config = application.config.oidc
-//
-//        mvcLocaleChangeInterceptor(LocaleChangeInterceptor)
-//
-//        def handlerInterceptors = [ref('mvcLocaleChangeInterceptor')]
-//        config.interceptors.each { interceptor ->
-//            handlerInterceptors << ref(interceptor)
-//        }
-
-//        mvcHandlerMapping(BeanNameUrlHandlerMapping) {
-//            detectHandlersInAncestorContexts = true
-//            order = 1
-//            interceptors = handlerInterceptors
-//        }
-
-//        mvcViewResolver(UrlBasedViewResolver) {
-//            viewClass = GrailsSpringMvcView
-//            order = 1
-//            prefix = '/WEB-INF/jsp/'
-//            suffix = '.jsp'
-//        }
-
-//        handlerExceptionResolver(SimpleMappingExceptionResolver) {
-//            order = 1
-//            defaultErrorView = config.defaultErrorView ?: 'error' // default to WEB-INF/error.jsp
-//            if (config.exceptionMappings) {
-//                exceptionMappings = new Properties()
-//                config.exceptionMappings.each { key, value ->
-//                    exceptionMappings.setProperty key, value
-//                }
-//            }
-//        }
-
-//        def componentPackages = config.componentPackages
-//        if (componentPackages instanceof Collection) {
-//            xmlns grailsContext:'http://grails.org/schema/context'
-//            grailsContext.'component-scan'('base-package': componentPackages.join(','))
-//        }
     }
 
     def doWithDynamicMethods = { ctx ->
