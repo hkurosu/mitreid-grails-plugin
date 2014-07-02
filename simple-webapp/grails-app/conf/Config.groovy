@@ -124,3 +124,7 @@ log4j = {
 
     debug 'org.codehaus.groovy.grails.web.servlet'
 }
+
+oidc {
+    separateServlet = false
+}
