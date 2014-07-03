@@ -67,7 +67,7 @@ Brief summary/description of the plugin.
             lastMapping + {
                 'servlet-mapping' {
                     'servlet-name'('oidc')
-                    'url-pattern'("/resources/*")
+//                    'url-pattern'("/resources/*")
                     'url-pattern'("/.well-known/openid-configuration")
                     'url-pattern'("/home")
                     'url-pattern'("/about")
